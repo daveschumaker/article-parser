@@ -15,7 +15,7 @@ import { DOMParser } from 'linkedom'
  * @param transform {(Document)=>Document}
  * @returns {Promise<string>}
  */
-export default async (inputHtml, url, transform = null) => {
+export default async (inputHtml, url) => {
   const $article = new DOMParser().parseFromString(inputHtml, 'text/html')
   Array.from($article.getElementsByTagName('a')).forEach(node => {
     const href = node.getAttribute('href')
@@ -32,8 +32,7 @@ export default async (inputHtml, url, transform = null) => {
     }
   })
 
-  const html = (transform?.call($article, $article) ?? $article).documentElement.innerHTML
-
+  const html = $article.documentElement.innerHTML
   const crushed = crush(html, getHtmlCrushOptions())
 
   const cleanHtml = sanitize(crushed.result, getSanitizeHtmlOptions())

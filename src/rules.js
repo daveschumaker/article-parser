@@ -9,6 +9,22 @@
  */
 export const rules = [
   {
+    patterns: ['*://theverge.com/*'],
+    transform: (document) => {
+      document.querySelectorAll('aside').forEach(node => {
+        const newNode = document.createElement('div')
+        newNode.innerHTML = node.innerHTML
+        node.parentNode.replaceChild(newNode, node)
+      })
+      document.querySelectorAll('q').forEach(node => {
+        const newNode = document.createElement('blockquote')
+        newNode.innerHTML = node.innerHTML
+        node.parentNode.replaceChild(newNode, node)
+      })
+      return document
+    }
+  },
+  {
     patterns: ['*://thanhnien.vn/*'],
     unwanted: [
       '.morenews',

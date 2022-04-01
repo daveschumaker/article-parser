@@ -19,18 +19,18 @@ export default (html, inputUrl = '') => {
 
   // Fix issues with "aside" tags on websites such as Engadget and The Verge,
   // where they embed quotes within the actual article.
-  doc.querySelectorAll('aside').forEach(node => {
-    const newNode = doc.createElement('div')
-    newNode.innerHTML = node.innerHTML
-    node.parentNode.replaceChild(newNode, node)
-  })
+  // doc.querySelectorAll('aside').forEach(node => {
+  //   const newNode = doc.createElement('div')
+  //   newNode.innerHTML = node.innerHTML
+  //   node.parentNode.replaceChild(newNode, node)
+  // })
 
-  // Convert "q" tags into blockquotes.
-  doc.querySelectorAll('q').forEach(node => {
-    const newNode = doc.createElement('blockquote')
-    newNode.innerHTML = node.innerHTML
-    node.parentNode.replaceChild(newNode, node)
-  })
+  // // Convert "q" tags into blockquotes.
+  // doc.querySelectorAll('q').forEach(node => {
+  //   const newNode = doc.createElement('blockquote')
+  //   newNode.innerHTML = node.innerHTML
+  //   node.parentNode.replaceChild(newNode, node)
+  // })
 
   const base = doc.createElement('base')
   base.setAttribute('href', inputUrl)

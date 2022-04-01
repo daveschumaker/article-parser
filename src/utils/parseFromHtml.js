@@ -16,6 +16,7 @@ import extractMetaData from './extractMetaData.js'
 import extractWithReadability, { extractTitleWithReadability } from './extractWithReadability.js'
 import extractWithSelector from './extractWithSelector.js'
 import stripUnwantedTags from './stripUnwantedTags.js'
+import transformHtml from './transformHtml.js'
 
 import standalizeArticle from './standalizeArticle.js'
 import getTimeToRead from './getTimeToRead.js'
@@ -97,14 +98,17 @@ export default async (inputHtml, inputUrl = '') => {
 
   const mainContent = stripUnwantedTags(mainContentSelected ?? html, unwanted)
 
-  const content = extractWithReadability(mainContent, bestUrl)
+  // transform url
+  const transformContent = transformHtml(mainContent, transform)
+
+  const content = extractWithReadability(transformContent, bestUrl)
 
   if (!content) {
     logger.info('Could not detect article content!')
     return null
   }
 
-  const normalizedContent = await standalizeArticle(content, bestUrl, transform)
+  const normalizedContent = await standalizeArticle(content, bestUrl)
 
   const textContent = stripTags(normalizedContent)
   if (textContent.length < contentLengthThreshold) {
